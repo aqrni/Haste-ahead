@@ -7,70 +7,129 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-      padding: 10px;
       background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
     }
     .container {
       max-width: 600px;
       margin: 0 auto;
-      padding: 20px;
       background-color: white;
+      padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    input, button {
+    h2 {
+      text-align: center;
+    }
+    label, input, button, select {
       display: block;
+      width: 100%;
       margin: 10px 0;
       padding: 10px;
-      width: 100%;
       font-size: 1.1em;
+    }
+    input, select {
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .results p {
+      font-size: 1.1em;
+      margin: 5px 0;
+    }
+    span {
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
+
   <div class="container">
     <h2>حاسبة الرواتب</h2>
+
+    <label for="employmentType">النظام الوظيفي:</label>
+    <select id="employmentType">
+      <option value="civil">الخدمة المدنية</option>
+      <option value="selfEmployed">التشغيل الذاتي</option>
+    </select>
+
     <label for="baseSalary">الراتب الأساسي:</label>
     <input type="number" id="baseSalary" placeholder="أدخل الراتب الأساسي">
-    
-    <label for="netSalary">الراتب الصافي:</label>
-    <input type="number" id="netSalary" placeholder="أدخل الراتب الصافي">
-    
-    <button onclick="calculateSalary()">احسب</button>
-    
-    <h3>النتائج:</h3>
-    <p>الراتب الأساسي الجديد: <span id="newBaseSalary"></span></p>
-    <p>بدل السكن: <span id="housingAllowance"></span></p>
-    <p>بدل النقل: <span id="transportAllowance"></span></p>
-    <p>الراتب الإجمالي: <span id="totalSalary"></span></p>
-    <p>خصم التأمينات: <span id="insuranceDeduction"></span></p>
-    <p>الراتب الصافي بعد الخصم: <span id="netTotalSalary"></span></p>
+
+    <label for="housingAllowance">بدل السكن:</label>
+    <input type="number" id="housingAllowance" placeholder="أدخل بدل السكن">
+
+    <label for="otherAllowances">البدلات الأخرى:</label>
+    <input type="number" id="otherAllowances" placeholder="أدخل البدلات الأخرى">
+
+    <button onclick="calculateSalary()">احسب الراتب الأساسي</button>
+
+    <div class="results">
+      <h3>النتائج (قبل التحول):</h3>
+      <p>الراتب الإجمالي: <span id="totalSalary">0</span></p>
+      <p>خصم التقاعد: <span id="pensionDeduction">0</span></p>
+      <p>الراتب الصافي: <span id="netSalary">0</span></p>
+    </div>
+
+    <button onclick="calculateNewSalary()">احسب الراتب بعد التحول</button>
+
+    <div class="results">
+      <h3>النتائج (بعد التحول):</h3>
+      <p>الراتب الأساسي الجديد: <span id="newBaseSalary">0</span></p>
+    </div>
   </div>
 
   <script>
+    let baseSalary = 0;
+    let housingAllowance = 0;
+    let otherAllowances = 0;
+    let totalSalary = 0;
+    let pensionDeduction = 0;
+    let netSalary = 0;
+
     function calculateSalary() {
-      let baseSalary = parseFloat(document.getElementById('baseSalary').value);
-      let netSalary = parseFloat(document.getElementById('netSalary').value);
-      
+      // استرجاع القيم المدخلة من الحقول
+      baseSalary = parseFloat(document.getElementById('baseSalary').value) || 0;
+      housingAllowance = parseFloat(document.getElementById('housingAllowance').value) || 0;
+      otherAllowances = parseFloat(document.getElementById('otherAllowances').value) || 0;
+      let employmentType = document.getElementById('employmentType').value;
+
+      // حساب الراتب الإجمالي
+      totalSalary = baseSalary + housingAllowance + otherAllowances;
+      document.getElementById('totalSalary').innerText = totalSalary.toFixed(2);
+
+      // حساب خصم التقاعد
+      if (employmentType === 'civil') {
+        // خصم التقاعد للخدمة المدنية (9% من الراتب الأساسي)
+        pensionDeduction = baseSalary * 0.09;
+      } else if (employmentType === 'selfEmployed') {
+        // خصم التقاعد للتشغيل الذاتي (9.75% من الراتب الأساسي وبدل السكن)
+        pensionDeduction = (baseSalary + housingAllowance) * 0.0975;
+      }
+      document.getElementById('pensionDeduction').innerText = pensionDeduction.toFixed(2);
+
+      // حساب الراتب الصافي
+      netSalary = totalSalary - pensionDeduction;
+      document.getElementById('netSalary').innerText = netSalary.toFixed(2);
+    }
+
+    function calculateNewSalary() {
+      // حساب الراتب بعد التحول
       let newBaseSalary = Math.max(baseSalary, netSalary / 1.228125);
       document.getElementById('newBaseSalary').innerText = newBaseSalary.toFixed(2);
-      
-      let housingAllowance = newBaseSalary * 0.25;
-      document.getElementById('housingAllowance').innerText = housingAllowance.toFixed(2);
-      
-      let transportAllowance = newBaseSalary * 0.10;
-      document.getElementById('transportAllowance').innerText = transportAllowance.toFixed(2);
-      
-      let totalSalary = newBaseSalary + housingAllowance + transportAllowance;
-      document.getElementById('totalSalary').innerText = totalSalary.toFixed(2);
-      
-      let insuranceDeduction = (newBaseSalary + housingAllowance) * 0.0975;
-      document.getElementById('insuranceDeduction').innerText = insuranceDeduction.toFixed(2);
-      
-      let netTotalSalary = totalSalary - insuranceDeduction;
-      document.getElementById('netTotalSalary').innerText = netTotalSalary.toFixed(2);
     }
   </script>
+
 </body>
 </html>
