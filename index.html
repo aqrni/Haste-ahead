@@ -11,6 +11,7 @@
       margin: 0;
       padding: 20px;
       color: #333;
+      text-align: center;
     }
     .container {
       max-width: 700px;
@@ -21,13 +22,12 @@
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     }
     h2 {
-      text-align: center;
       color: #1f4e79;
       margin-bottom: 20px;
       font-size: 1.8em;
     }
     label {
-      font-size: 1.2em;
+      font-size: 1.1em;  /* تم تصغير الخط قليلاً */
       color: #1f4e79;
       margin-bottom: 5px;
     }
@@ -36,12 +36,13 @@
       width: 100%;
       margin: 10px 0;
       padding: 12px;
-      font-size: 1.1em;
+      font-size: 1em; /* تصغير الخط قليلاً */
       border-radius: 8px;
       border: 1px solid #ccc;
       box-sizing: border-box;
       background-color: #f9f9f9;
       transition: border-color 0.3s ease;
+      text-align: center;
     }
     input:focus, select:focus {
       border-color: #1f4e79;
@@ -57,12 +58,12 @@
     }
     .results h3 {
       color: #1f4e79;
-      margin-bottom: 10px;
-      font-size: 1.5em;
+      margin-bottom: 15px;  /* زيادة المسافة بين اسم البند والمبلغ */
+      font-size: 1.4em;
     }
     .results p {
-      font-size: 1.2em;
-      margin: 5px 0;
+      font-size: 1.1em;  /* تم تصغير الخط قليلاً */
+      margin: 10px 0;  /* زيادة المسافة بين اسم البند والمبلغ */
     }
     .results span {
       font-weight: bold;
@@ -75,16 +76,22 @@
     }
     .diff-section h3 {
       color: #1f4e79;
-      font-size: 1.4em;
+      font-size: 1.3em;
     }
     .diff-section p {
-      font-size: 1.1em;
+      font-size: 1em;  /* تصغير الخط قليلاً */
     }
     .highlight {
       background-color: #eef5ff;
-      padding: 10px;
+      padding: 15px;  /* زيادة المساحة الداخلية */
       border-radius: 8px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;  /* زيادة المسافة بين البند والمبلغ */
+    }
+    .form-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;  /* زيادة المسافة بين تسمية العقد وقائمة الاختيار */
     }
   </style>
 </head>
@@ -93,35 +100,37 @@
   <div class="container">
     <h2>حاسبة الرواتب</h2>
 
-    <label for="employmentType">نوع العقد الوظيفي:</label>
-    <select id="employmentType">
-      <option value="civil">الخدمة المدنية</option>
-      <option value="selfEmployed">التشغيل الذاتي</option>
-    </select>
+    <div class="form-group">
+      <label for="employmentType">نوع العقد الوظيفي:</label>
+      <select id="employmentType">
+        <option value="civil">الخدمة المدنية</option>
+        <option value="selfEmployed">التشغيل الذاتي</option>
+      </select>
+    </div>
 
     <label for="baseSalary">الراتب الأساسي:</label>
-    <input type="number" id="baseSalary" placeholder="أدخل الراتب الأساسي" value="0">
+    <input type="number" id="baseSalary" placeholder="أدخل الراتب الأساسي">
 
     <label id="housingLabel" for="housingAllowance" style="display: none;">بدل السكن:</label>
-    <input type="number" id="housingAllowance" placeholder="أدخل بدل السكن" style="display: none;" value="0">
+    <input type="number" id="housingAllowance" placeholder="أدخل بدل السكن" style="display: none;">
 
     <label id="otherAllowancesLabel" for="otherAllowances">البدلات الأخرى:</label>
-    <input type="number" id="otherAllowances" placeholder="أدخل البدلات الأخرى" value="0">
+    <input type="number" id="otherAllowances" placeholder="أدخل البدلات الأخرى">
     <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
 
     <div class="results highlight">
-      <h3>النتائج (قبل التحول):</h3>
+      <h3>الراتب الحالي:</h3>
       <p>الراتب الإجمالي: <span id="totalSalary">0</span></p>
       <p>خصم التقاعد: <span id="pensionDeduction">0</span></p>
       <p>الراتب الصافي: <span id="netSalary">0</span></p>
     </div>
 
     <div class="results highlight">
-      <h3>النتائج (بعد التحول):</h3>
-      <p>الراتب الأساسي الجديد: <span id="newBaseSalary">0</span></p>
-      <p>بدل السكن الجديد: <span id="newHousingAllowance">0</span></p>
-      <p>بدل النقل الجديد: <span id="newTransportAllowance">0</span></p>
-      <p>الراتب الإجمالي الجديد: <span id="newTotalSalary">0</span></p>
+      <h3>الراتب بعد التحول لشركة الصحة القابضة:</h3>
+      <p>الراتب الأساسي: <span id="newBaseSalary">0</span></p>
+      <p>بدل السكن (25%): <span id="newHousingAllowance">0</span></p>
+      <p>بدل النقل (10%): <span id="newTransportAllowance">0</span></p>
+      <p>الراتب الإجمالي: <span id="newTotalSalary">0</span></p>
       <p>خصم التقاعد بعد التحول: <span id="newPensionDeduction">0</span></p>
       <p>الراتب الصافي بعد التحول: <span id="newNetSalary">0</span></p>
     </div>
@@ -157,7 +166,7 @@
         document.getElementById('housingLabel').style.display = 'none';
         document.getElementById('housingAllowance').style.display = 'none';
         document.getElementById('otherAllowancesLabel').innerText = "البدلات الأخرى:";
-        document.getElementById('housingAllowance').value = 0; // reset housing allowance for civil
+        document.getElementById('housingAllowance').value = ""; // reset housing allowance for civil
       }
       calculateSalary();
     }
