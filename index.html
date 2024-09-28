@@ -136,22 +136,6 @@
     table td {
       background-color: #fff;
     }
-    button {
-      background-color: #1f4e79;
-      color: #fff;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1.1em;
-      margin-top: 20px;
-      display: block;
-      width: 100%;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #163a5c;
-    }
   </style>
 </head>
 <body>
@@ -200,7 +184,7 @@
     </div>
 
     <div class="results">
-      <h3>راب شركة الصحة القابضة:</h3>
+      <h3>الراتب بعد التحول لشركة الصحة القابضة:</h3>
       <table>
         <tr>
           <th>البند</th>
@@ -234,7 +218,7 @@
     </div>
 
     <div class="diff-section">
-      <h3>الفروقات بين الراتب قبل وبعد التحول:</h3>
+      <h3>الفروقات قبل وبعد التحول:</h3>
       <table>
         <tr>
           <th>البند</th>
@@ -250,8 +234,6 @@
         </tr>
       </table>
     </div>
-
-    <button type="button">حساب الراتب</button>
 
   </div>
 
@@ -294,7 +276,7 @@
 
       // حساب الراتب الإجمالي
       totalSalary = baseSalary + housingAllowance + otherAllowances;
-      document.getElementById('totalSalary').innerText = totalSalary.toFixed(2);
+      document.getElementById('totalSalary').innerText = formatNumber(totalSalary);
 
       // حساب خصم التقاعد
       if (employmentType === 'civil') {
@@ -302,11 +284,11 @@
       } else if (employmentType === 'selfEmployed') {
         pensionDeduction = (baseSalary + housingAllowance) * 0.0975;
       }
-      document.getElementById('pensionDeduction').innerText = pensionDeduction.toFixed(2);
+      document.getElementById('pensionDeduction').innerText = formatNumber(pensionDeduction);
 
       // حساب الراتب الصافي
       netSalary = totalSalary - pensionDeduction;
-      document.getElementById('netSalary').innerText = netSalary.toFixed(2);
+      document.getElementById('netSalary').innerText = formatNumber(netSalary);
 
       calculateNewSalary();
     }
@@ -314,7 +296,7 @@
     function calculateNewSalary() {
       // حساب الراتب الأساسي بعد التحول
       let newBaseSalary = Math.max(baseSalary, netSalary / 1.228125);
-      document.getElementById('newBaseSalary').innerText = newBaseSalary.toFixed(2);
+      document.getElementById('newBaseSalary').innerText = formatNumber(newBaseSalary);
 
       // حساب البدلات الجديدة
       let newHousingAllowance = newBaseSalary * 0.25;
@@ -324,17 +306,21 @@
       let newNetSalary = newTotalSalary - newPensionDeduction;
 
       // تحديث النتائج
-      document.getElementById('newHousingAllowance').innerText = newHousingAllowance.toFixed(2);
-      document.getElementById('newTransportAllowance').innerText = newTransportAllowance.toFixed(2);
-      document.getElementById('newTotalSalary').innerText = newTotalSalary.toFixed(2);
-      document.getElementById('newPensionDeduction').innerText = newPensionDeduction.toFixed(2);
-      document.getElementById('newNetSalary').innerText = newNetSalary.toFixed(2);
+      document.getElementById('newHousingAllowance').innerText = formatNumber(newHousingAllowance);
+      document.getElementById('newTransportAllowance').innerText = formatNumber(newTransportAllowance);
+      document.getElementById('newTotalSalary').innerText = formatNumber(newTotalSalary);
+      document.getElementById('newPensionDeduction').innerText = formatNumber(newPensionDeduction);
+      document.getElementById('newNetSalary').innerText = formatNumber(newNetSalary);
 
       // حساب الفروقات
       let salaryDifference = newBaseSalary - baseSalary;
       let netSalaryDifference = newNetSalary - netSalary;
-      document.getElementById('salaryDifference').innerText = salaryDifference.toFixed(2);
-      document.getElementById('netSalaryDifference').innerText = netSalaryDifference.toFixed(2);
+      document.getElementById('salaryDifference').innerText = formatNumber(salaryDifference);
+      document.getElementById('netSalaryDifference').innerText = formatNumber(netSalaryDifference);
+    }
+
+    function formatNumber(number) {
+      return number.toLocaleString('ar-EG', { maximumFractionDigits: 2 });
     }
 
     updateFields();
