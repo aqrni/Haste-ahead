@@ -7,55 +7,84 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f0f0f0;
       margin: 0;
       padding: 20px;
       color: #333;
     }
     .container {
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto;
       background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     }
     h2 {
       text-align: center;
-      color: #444;
+      color: #1f4e79;
       margin-bottom: 20px;
+      font-size: 1.8em;
     }
-    label, input, select {
+    label {
+      font-size: 1.2em;
+      color: #1f4e79;
+      margin-bottom: 5px;
+    }
+    input, select {
       display: block;
       width: 100%;
       margin: 10px 0;
-      padding: 10px;
+      padding: 12px;
       font-size: 1.1em;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-    input, select {
+      border-radius: 8px;
       border: 1px solid #ccc;
+      box-sizing: border-box;
+      background-color: #f9f9f9;
+      transition: border-color 0.3s ease;
+    }
+    input:focus, select:focus {
+      border-color: #1f4e79;
     }
     .notes {
-      font-size: 0.9em;
+      font-size: 0.85em;
       color: #666;
-      margin-top: -10px;
+      margin-top: -8px;
+      margin-bottom: 20px;
     }
     .results {
-      margin-top: 20px;
+      margin-top: 25px;
+    }
+    .results h3 {
+      color: #1f4e79;
+      margin-bottom: 10px;
+      font-size: 1.5em;
     }
     .results p {
       font-size: 1.2em;
-      color: #444;
+      margin: 5px 0;
     }
-    span {
+    .results span {
       font-weight: bold;
+      color: #333;
     }
     .diff-section {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid #ddd;
+      margin-top: 25px;
+      padding-top: 15px;
+      border-top: 2px solid #ddd;
+    }
+    .diff-section h3 {
+      color: #1f4e79;
+      font-size: 1.4em;
+    }
+    .diff-section p {
+      font-size: 1.1em;
+    }
+    .highlight {
+      background-color: #eef5ff;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
@@ -80,14 +109,14 @@
     <input type="number" id="otherAllowances" placeholder="أدخل البدلات الأخرى" value="0">
     <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
 
-    <div class="results">
+    <div class="results highlight">
       <h3>النتائج (قبل التحول):</h3>
       <p>الراتب الإجمالي: <span id="totalSalary">0</span></p>
       <p>خصم التقاعد: <span id="pensionDeduction">0</span></p>
       <p>الراتب الصافي: <span id="netSalary">0</span></p>
     </div>
 
-    <div class="results">
+    <div class="results highlight">
       <h3>النتائج (بعد التحول):</h3>
       <p>الراتب الأساسي الجديد: <span id="newBaseSalary">0</span></p>
       <p>بدل السكن الجديد: <span id="newHousingAllowance">0</span></p>
