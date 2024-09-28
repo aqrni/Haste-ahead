@@ -27,16 +27,16 @@
       font-size: 1.8em;
     }
     label {
-      font-size: 1.1em;  /* تم تصغير الخط قليلاً */
+      font-size: 1.1em;
       color: #1f4e79;
       margin-bottom: 5px;
     }
-    input, select {
+    input[type="number"], select {
       display: block;
       width: 100%;
       margin: 10px 0;
       padding: 12px;
-      font-size: 1em; /* تصغير الخط قليلاً */
+      font-size: 1em;
       border-radius: 8px;
       border: 1px solid #ccc;
       box-sizing: border-box;
@@ -58,12 +58,12 @@
     }
     .results h3 {
       color: #1f4e79;
-      margin-bottom: 15px;  /* زيادة المسافة بين اسم البند والمبلغ */
+      margin-bottom: 15px;
       font-size: 1.4em;
     }
     .results p {
-      font-size: 1.1em;  /* تم تصغير الخط قليلاً */
-      margin: 10px 0;  /* زيادة المسافة بين اسم البند والمبلغ */
+      font-size: 1.1em;
+      margin: 10px 0;
     }
     .results span {
       font-weight: bold;
@@ -79,19 +79,49 @@
       font-size: 1.3em;
     }
     .diff-section p {
-      font-size: 1em;  /* تصغير الخط قليلاً */
+      font-size: 1em;
     }
     .highlight {
       background-color: #eef5ff;
-      padding: 15px;  /* زيادة المساحة الداخلية */
+      padding: 15px;
       border-radius: 8px;
-      margin-bottom: 20px;  /* زيادة المسافة بين البند والمبلغ */
+      margin-bottom: 20px;
     }
     .form-group {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 15px;  /* زيادة المسافة بين تسمية العقد وقائمة الاختيار */
+      gap: 15px;
+    }
+    .form-group label {
+      margin-right: 10px;
+    }
+    table {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: right;
+      font-size: 1em;
+    }
+    table th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+    }
+    table td {
+      background-color: #fff;
+    }
+    .radio-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .radio-group input {
+      margin-right: 8px;
     }
   </style>
 </head>
@@ -101,11 +131,11 @@
     <h2>حاسبة الرواتب</h2>
 
     <div class="form-group">
-      <label for="employmentType">نوع العقد الوظيفي:</label>
-      <select id="employmentType">
-        <option value="civil">الخدمة المدنية</option>
-        <option value="selfEmployed">التشغيل الذاتي</option>
-      </select>
+      <label>نوع العقد الوظيفي:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="employmentType" value="civil" checked> الخدمة المدنية</label>
+        <label><input type="radio" name="employmentType" value="selfEmployed"> التشغيل الذاتي</label>
+      </div>
     </div>
 
     <label for="baseSalary">الراتب الأساسي:</label>
@@ -120,25 +150,76 @@
 
     <div class="results highlight">
       <h3>الراتب الحالي:</h3>
-      <p>الراتب الإجمالي: <span id="totalSalary">0</span></p>
-      <p>خصم التقاعد: <span id="pensionDeduction">0</span></p>
-      <p>الراتب الصافي: <span id="netSalary">0</span></p>
+      <table>
+        <tr>
+          <th>البند</th>
+          <th>المبلغ</th>
+        </tr>
+        <tr>
+          <td>الراتب الإجمالي</td>
+          <td><span id="totalSalary">0</span></td>
+        </tr>
+        <tr>
+          <td>خصم التقاعد</td>
+          <td><span id="pensionDeduction">0</span></td>
+        </tr>
+        <tr>
+          <td>الراتب الصافي</td>
+          <td><span id="netSalary">0</span></td>
+        </tr>
+      </table>
     </div>
 
     <div class="results highlight">
       <h3>الراتب بعد التحول لشركة الصحة القابضة:</h3>
-      <p>الراتب الأساسي: <span id="newBaseSalary">0</span></p>
-      <p>بدل السكن (25%): <span id="newHousingAllowance">0</span></p>
-      <p>بدل النقل (10%): <span id="newTransportAllowance">0</span></p>
-      <p>الراتب الإجمالي: <span id="newTotalSalary">0</span></p>
-      <p>خصم التقاعد بعد التحول: <span id="newPensionDeduction">0</span></p>
-      <p>الراتب الصافي بعد التحول: <span id="newNetSalary">0</span></p>
+      <table>
+        <tr>
+          <th>البند</th>
+          <th>المبلغ</th>
+        </tr>
+        <tr>
+          <td>الراتب الأساسي</td>
+          <td><span id="newBaseSalary">0</span></td>
+        </tr>
+        <tr>
+          <td>بدل السكن (25%)</td>
+          <td><span id="newHousingAllowance">0</span></td>
+        </tr>
+        <tr>
+          <td>بدل النقل (10%)</td>
+          <td><span id="newTransportAllowance">0</span></td>
+        </tr>
+        <tr>
+          <td>الراتب الإجمالي</td>
+          <td><span id="newTotalSalary">0</span></td>
+        </tr>
+        <tr>
+          <td>خصم التقاعد بعد التحول</td>
+          <td><span id="newPensionDeduction">0</span></td>
+        </tr>
+        <tr>
+          <td>الراتب الصافي بعد التحول</td>
+          <td><span id="newNetSalary">0</span></td>
+        </tr>
+      </table>
     </div>
 
     <div class="diff-section">
       <h3>الفروقات بين الراتب قبل وبعد التحول:</h3>
-      <p>الفرق في الراتب الأساسي: <span id="salaryDifference">0</span></p>
-      <p>الفرق في الراتب الصافي: <span id="netSalaryDifference">0</span></p>
+      <table>
+        <tr>
+          <th>البند</th>
+          <th>المبلغ</th>
+        </tr>
+        <tr>
+          <td>الفرق في الراتب الأساسي</td>
+          <td><span id="salaryDifference">0</span></td>
+        </tr>
+        <tr>
+          <td>الفرق في الراتب الصافي</td>
+          <td><span id="netSalaryDifference">0</span></td>
+        </tr>
+      </table>
     </div>
 
   </div>
@@ -151,13 +232,16 @@
     let pensionDeduction = 0;
     let netSalary = 0;
 
-    document.getElementById('employmentType').addEventListener('change', updateFields);
-    document.querySelectorAll('input').forEach(input => {
+    document.querySelectorAll('input[name="employmentType"]').forEach(radio => {
+      radio.addEventListener('change', updateFields);
+    });
+
+    document.querySelectorAll('input[type="number"]').forEach(input => {
       input.addEventListener('input', calculateSalary);
     });
 
     function updateFields() {
-      let employmentType = document.getElementById('employmentType').value;
+      let employmentType = document.querySelector('input[name="employmentType"]:checked').value;
       if (employmentType === 'selfEmployed') {
         document.getElementById('housingLabel').style.display = 'block';
         document.getElementById('housingAllowance').style.display = 'block';
@@ -175,7 +259,7 @@
       baseSalary = parseFloat(document.getElementById('baseSalary').value) || 0;
       housingAllowance = parseFloat(document.getElementById('housingAllowance').value) || 0;
       otherAllowances = parseFloat(document.getElementById('otherAllowances').value) || 0;
-      let employmentType = document.getElementById('employmentType').value;
+      let employmentType = document.querySelector('input[name="employmentType"]:checked').value;
 
       // حساب الراتب الإجمالي
       totalSalary = baseSalary + housingAllowance + otherAllowances;
