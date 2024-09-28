@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حاسبة الرواتب</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 10px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input, button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>حاسبة الرواتب</h2>
+    <label for="baseSalary">الراتب الأساسي:</label>
+    <input type="number" id="baseSalary" placeholder="أدخل الراتب الأساسي">
+    
+    <label for="netSalary">الراتب الصافي:</label>
+    <input type="number" id="netSalary" placeholder="أدخل الراتب الصافي">
+    
+    <button onclick="calculateSalary()">احسب</button>
+    
+    <h3>النتائج:</h3>
+    <p>الراتب الأساسي الجديد: <span id="newBaseSalary"></span></p>
+    <p>بدل السكن: <span id="housingAllowance"></span></p>
+    <p>بدل النقل: <span id="transportAllowance"></span></p>
+    <p>الراتب الإجمالي: <span id="totalSalary"></span></p>
+    <p>خصم التأمينات: <span id="insuranceDeduction"></span></p>
+    <p>الراتب الصافي بعد الخصم: <span id="netTotalSalary"></span></p>
+  </div>
+
+  <script>
+    function calculateSalary() {
+      let baseSalary = parseFloat(document.getElementById('baseSalary').value);
+      let netSalary = parseFloat(document.getElementById('netSalary').value);
+      
+      let newBaseSalary = Math.max(baseSalary, netSalary / 1.228125);
+      document.getElementById('newBaseSalary').innerText = newBaseSalary.toFixed(2);
+      
+      let housingAllowance = newBaseSalary * 0.25;
+      document.getElementById('housingAllowance').innerText = housingAllowance.toFixed(2);
+      
+      let transportAllowance = newBaseSalary * 0.10;
+      document.getElementById('transportAllowance').innerText = transportAllowance.toFixed(2);
+      
+      let totalSalary = newBaseSalary + housingAllowance + transportAllowance;
+      document.getElementById('totalSalary').innerText = totalSalary.toFixed(2);
+      
+      let insuranceDeduction = (newBaseSalary + housingAllowance) * 0.0975;
+      document.getElementById('insuranceDeduction').innerText = insuranceDeduction.toFixed(2);
+      
+      let netTotalSalary = totalSalary - insuranceDeduction;
+      document.getElementById('netTotalSalary').innerText = netTotalSalary.toFixed(2);
+    }
+  </script>
+</body>
+</html>
